@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="org.pingplatform.ping.PingConfig"/>
+<classEntry path="org.pingplatform.ping.PingConstants"/>
+<classEntry path="org.pingplatform.ping.PingCorner"/>
+<classEntry path="org.pingplatform.ping.PingCornerData"/>
+<classEntry path="org.pingplatform.ping.PingData"/>
+<classEntry path="org.pingplatform.ping.PingKit"/>
+<classEntry path="org.pingplatform.ping.PingMessaging"/>
+<classEntry path="org.pingplatform.ping.PingSensor"/>
+<classEntry path="org.pingplatform.ping.PingSide"/>
+<classEntry path="org.pingplatform.ping.PingSideData"/>
+<classEntry path="org.pingplatform.ping.events.PingCornerDataEvent"/>
+<classEntry path="org.pingplatform.ping.events.PingSensorDataEvent"/>
+<classEntry path="org.pingplatform.ping.events.PingSideDataEvent"/>
+<classEntry path="org.pingplatform.ping.utils.ArrayUtil"/>
+<classEntry path="org.pingplatform.ping.utils.Normalize"/>
+<classEntry path="org.pingplatform.ping.utils.PingUtil"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
