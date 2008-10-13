@@ -18,8 +18,8 @@ package org.pingplatform.ping {
 		private var _data:PingCornerData;
 		
 				
-		public function PingCorner( index:uint, sensor:PingSensor ) {
-			_sensor = sensor;
+		public function PingCorner( index:uint, longSensor:PingSensor, shortSensor:PingSensor = null ) {
+			_sensor = longSensor;
 			_data = new PingCornerData();
 
 			Sensor.addEventListener( PingSensor.SENSOR_CALIBRATED, onCalibrated );
