@@ -21,7 +21,7 @@ package org.pingplatform.ping {
 		public function PingCorner( index:uint, longSensor:PingSensor, shortSensor:PingSensor = null ) {
 			_sensor = longSensor;
 			_data = new PingCornerData();
-
+			// Comment to cause a commit
 			Sensor.addEventListener( PingSensor.SENSOR_CALIBRATED, onCalibrated );
 			Sensor.addEventListener( PingSensorDataEvent.SENSOR_CHANGE, onSensorChange );
 		}
