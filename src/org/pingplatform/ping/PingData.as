@@ -12,6 +12,9 @@ package org.pingplatform.ping {
 		
 		public static const PING_CALIBRATED:String = "pingCalibratedEvent";
 		
+		public static const KIT_0:uint = 69610; // Tony's SN
+		public static const KIT_1:uint = 76036; // Polly's SN
+		
 		public static const SIDE_A:uint = 0;
 		public static const SIDE_B:uint = 1;
 		public static const SIDE_C:uint = 2;
@@ -71,7 +74,8 @@ package org.pingplatform.ping {
 		
 		private static function onAttach( event:PhidgetManagerEvent ):void {
 			var kit:PingKit = new PingKit( event.Device.serialNumber );
-			kit.addEventListener( PhidgetEvent.ATTACH, onKitAttach );
+			kit.addEventListener( PingKit.KIT_ATTACHED, onKitAttach );
+			//kit.addEventListener( PhidgetEvent.ATTACH, onKitAttach );
 			_kits.addItem( kit );
 		}
 		
@@ -82,12 +86,22 @@ package org.pingplatform.ping {
 			trace( event.Error.message );
 		}
 		
-		private static function onKitAttach( event:Event ):void {
-			_Calibrate();
-		}
+		private static var kitsAttached:uint = 0;
 		
+		private static function onKitAttach( event:Event ):void {
+			kitsAttached++;
+			if (kitsAttached == 2)
+				_Calibrate();
+		}
+
 		private static function _Calibrate():void {
 			
+			//if ( Kits.length < 2 )
+			trace("WOOT");
+			//trace( Kits.length );
+			
+			//return;
+				
 			//var k:PingKit = Kit(0);
 			//k.sensorCorners[0] = PingData.CORNER_AL;
 			//k.sensorCorners[1] = PingData.CORNER_AR;
@@ -95,6 +109,16 @@ package org.pingplatform.ping {
 			//k.sensorCorners[3] = PingData.CORNER_CR;
 			
 			var sensorCorners:Array = new Array(8);
+			sensorCorners[ CORNER_AL ] = KitBySerial( KIT_0 ).Sensor( 0 );
+			sensorCorners[ CORNER_AR ] = KitBySerial( KIT_0 ).Sensor( 4 );
+			sensorCorners[ CORNER_BL ] = KitBySerial( KIT_1 ).Sensor( 6 );
+			sensorCorners[ CORNER_BR ] = KitBySerial( KIT_0 ).Sensor( 2 );
+			sensorCorners[ CORNER_CL ] = KitBySerial( KIT_1 ).Sensor( 0 );
+			sensorCorners[ CORNER_CR ] = KitBySerial( KIT_1 ).Sensor( 4 );
+			sensorCorners[ CORNER_DL ] = KitBySerial( KIT_0 ).Sensor( 6 );
+			sensorCorners[ CORNER_DR ] = KitBySerial( KIT_1 ).Sensor( 2 );
+			
+			/*
 			sensorCorners[ CORNER_AL ] = Kit(0).Sensor( 0 );
 			sensorCorners[ CORNER_AR ] = Kit(0).Sensor( 1 );
 			sensorCorners[ CORNER_BL ] = Kit(0).Sensor( 2 );
@@ -103,9 +127,11 @@ package org.pingplatform.ping {
 			sensorCorners[ CORNER_CR ] = Kit(0).Sensor( 5 );
 			sensorCorners[ CORNER_DL ] = Kit(0).Sensor( 6 );
 			sensorCorners[ CORNER_DR ] = Kit(0).Sensor( 7 );
+			*/
 			
-			for ( var i:uint = 0; i < 8; i++ )
+			for ( var i:uint = 0; i < 8; i++ ) {
 				Corners[ i ] = new PingCorner( i, sensorCorners[ i ] );
+			}
 			
 			for ( i = 0; i < 4; i++ ) {
 				var ps:PingSide = new PingSide( Corner( i * 2 ), Corner( (i * 2) + 1 ), i );
@@ -134,6 +160,13 @@ package org.pingplatform.ping {
 			if ( value > Kits.length )
 				return null;
 			return Kits.getItemAt( value ) as PingKit;
+		}
+		
+		public static function KitBySerial( value:uint ):PingKit {
+			for each( var k:PingKit in Kits )
+				if ( k.SerialNumber == value )
+					return k;
+			return null;
 		}
 
 		public static function get Kits():ArrayCollection {
